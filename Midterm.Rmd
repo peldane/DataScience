@@ -1,0 +1,272 @@
+---
+title: "Data Science Online Exam"
+output: html_notebook
+---
+
+# 1. Write a R code to Generate 6x6 matrix (A) using the random numbers between 1 to 100 & generate anther 6x6 (b) using random numbers between 500 to 600
+
+ a. Find the range of matrices A and B.
+ b. Find the max value from each row of the matrices A and B.
+ c. Find the diagonal values of matrices A&B.
+ d. Multiply matrices A and B
+ e Replace the 4th row of Matrix A with diagonal values of matrix B
+ f. Multiply matrices A & B and store the values on X.
+ g. Divide the matrix A with matrix B.
+
+```{r}
+# 1). Write a program to generate 6*6 matrix (A) using a random number between 1 to 100 and another one (B) from 500 to 600
+a <- matrix(sample(1:100, 36), 6, 6)
+b <- matrix(sample(500:600, 36), 6, 6)
+
+```
+```{r}
+# b). Find max value from each row of A and B
+aMaxRow <- apply(a, 1, max)
+bMaxRow <- apply(b, 1, max)
+
+```
+```{r}
+# d). Multiply matrices A and B
+a %*% b
+```
+
+```{r}
+# e). Replace the 4th row of matrix A with diagonal value of matrix B
+a[4, ] <- diag(t(b))
+```
+
+```{r}
+# f). Multiply matrix A & B and store value in x
+x <- a %*% b
+```
+
+
+```{r}
+# e). divide matrix A & B
+a / b
+```
+
+#2. Create a table using dataframe/tibble with the following categories(a to f) 
+ 
+a First name,
+b. Second Name,
+c. Age,
+d. Occupation,
+e. Place,
+f. Random numbers( between 1 to 10)
+
+And input at least 10 samples(observation) and do the following
+ g. Extract the last column (f)
+ h. Find the sum, mean and length of the extracted column
+ 
+```{r}
+ # a).First name
+
+first_name = c("Pel", "Chea", "Pong", "Khean", "Thon", "Ly", "Houerng", "Sun", "Daro", "Ty")
+
+
+``` 
+
+
+```{r}
+# b).Second name
+
+second_name = c("Dane", "Nataly", "Channy", "Sreythou", "Lyana", "Chandara", "Hen", "Jenny", "Dalya", "Leapheng")
+
+```
+
+```{r}
+# c). Age
+age = c(21, 21, 23, 21, 20, 24, 21, 21, 21, 20)
+
+```
+
+```{r}
+# d). Occupation 
+occupation = c("Shop owner", "Engineering", "Teacher", "Singer", "Engineering", "Shop owner", "Teacher", "Business Advisor", "Trip Advisor", "Shop owner")
+
+```
+
+```{r}
+# e). Place
+place = c("Takeo", "Siem Reap", "Phnom Penh", "Phnom Penh", "Siem Reap", "Banteay Meanchey", "Kirirom", "Phnom Penh", "Kirirom", "Phnom Penh")
+
+```
+
+```{r}
+# f). random number (between 1 to 10)
+random = sample(1:10)
+
+data_table <- data.frame(First_Name = first_name, Second_Name=second_name, Age = age, Occupation = occupation, Place = place, Random_Number = random)
+data_table
+
+```
+
+
+```{r}
+# g). Extract the las column (F)
+random_col <- data_table$Random.Number
+random_col
+
+```
+
+
+```{r}
+# h). find the sum, mean and length of the extracted column
+sum <- sum(random_col)
+sum
+
+mean <- mean(random_col)
+mean
+
+length <- length(random_col)
+length
+```
+
+# 3. Create a.txt file (Minimun : 150 words) with the latest news(In English) in cambodia from the official news agency's website (Note: Include the reference link) and do the following
+
+ a. Read the .txt file
+ b. Perform the Tokenization & count the words
+ c. Identify the most repeated word and replace that word with “KIT”
+ d. Perform the Sentiment analysis
+ e. Plot the graph between “words count” and “words” using geom_col()
+
+e.1. X-axis title =“Number of words”, Size=10, Bold, Text in Blue color, Center, space between graph and title = 20.
+	e.2. Y-axis title =“List of words”, Size=10, Bold, Text in Red color, Center, space between graph and title = 20.
+	e.3. Graph title =”Text Mining using R”,Size = 25, Bold, Center, Text in Yellow color, space between graph and title = 25.
+
+
+
+ 
+```{r}
+library(tokenizers)
+#a. Read the .txt file
+# text is from https://www.phnompenhpost.com/business/virtual-reality-tech-catching-eyes-local-businesses
+data <- read.delim("D:/Lecture/semester VII/Data Science/R/phnompenhpost.txt")
+data
+
+#b. Perform the Tokenization count the words
+words_data <- paste(data)
+tokens <- tokenize_words(words_data)
+count <- count_words(words_data)
+count
+
+#c. Identify the most repeated word and replace that word with “KIT”
+#Identify the most repeated word
+most_words <- names(table(tokens))[as.vector(table(tokens))==max(table(tokens))]
+most_words_count <- max(table(tokens))
+print("The Most repeated word are: ")
+most_words
+print("Repeated for:  ")
+most_words_count
+
+#replace that word with “KIT”
+subs <- gsub(most_words, "KIT", tokens)
+subs
+
+```
+
+
+
+
+#4. Find the assigned Dataset from the list below and perform the following (20 Marks)
+a. Import and Clean the dataset.
+b. Find the x and y variables(axis) from the assigned dataset and give the reason for
+selecting the x and y axis.
+c. Plot the graph using geom_col() and perform the linear model in statistics.
+d. Perform the facet with the available columns(Choose the any two variables from the
+columns)
+e. Use the theme layer to do the following (Note: Based on dataset, name the x and y axis &amp;
+graph)
+e.1. x-axis title =“________”, Size=10, Bold, Text in Green color, Center, space
+between graph and title = 20.
+e.2. y-axis title =“________”, Size=10, Bold, Text in Yellow color, Center, space
+between graph and title = 20.
+e.3. Graph title =”_________”,Size = 25, Bold, Center, Text in Blue color, space
+between graph and title = 25.
+
+
+```{r}
+# a. Import and Clean the dataset.
+library("tidyverse")
+dataset = read_csv("D:/Lecture/semester VII/Data Science/R/movies.csv")
+dataset
+#is.na(dataset)
+# the dataset is already clean there is no NA so no need to clean again.
+
+# b. Find the x and y variables(axis) from the assigned dataset and give the reason for
+# selecting Budget as X and Year as Y so we can view each year in the column graph that may easy to understand.
+plot <- ggplot(dataset, aes(x=budget, y=year)) + 
+    xlab("Budget") +
+    ylab("Year")
+
+# c. Plot the graph using geom_col() and perform the linear model in statistics.
+# using geom_col
+plot <- plot+geom_col()
+
+#perform linear model
+plot <- plot+geom_smooth(method="lm")
+plot
+
+# d. Perform the facet with the available columns(Choose the any two variables from the columns)
+# use facet with 2 variable by the year budget and domgross
+plot+facet_grid(domgross~year)
+
+# use facet with 1 variable by the year of budget
+plot <- plot+facet_wrap(~year)
+plot
+
+# e. Use the theme layer to do the following (Note: Based on dataset, name the x and y axis graph)
+#e.1. x-axis title =“________”, Size=10, Bold, Text in Green color, Center, space between graph and title = 20.
+#e.2. y-axis title =“________”, Size=10, Bold, Text in Yellow color, Center, space between graph and title = 20.
+#e.3. Graph title =”_________”,Size = 25, Bold, Center, Text in Blue color, space between graph and title = 25.
+plot <- plot +
+  ggtitle("Budget") + theme(
+  axis.title.x=element_text(size=10, color="green", face="bold", margin=margin(t=20,r=20,b=0,l=0)),
+  axis.title.y=element_text(size=10, color="yellow", face="bold", margin=margin(t=0,r=20,b=0,l=20)),
+  plot.title=element_text(size=25, color="blue", face="bold", margin=margin(t=25,r=0,b=25,l=0))
+  )
+plot
+```
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
